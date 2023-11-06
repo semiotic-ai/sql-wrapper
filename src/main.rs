@@ -41,7 +41,7 @@ async fn main() -> Result<(), std::io::Error> {
         .with(Cors::new())
         .data(executor);
 
-    Server::new(TcpListener::bind("127.0.0.1:3000"))
+    Server::new(TcpListener::bind("0.0.0.0:3000"))
         .run(router)
         .await
 }
