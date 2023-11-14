@@ -33,8 +33,11 @@ async fn main() -> Result<(), std::io::Error> {
     let pool = Pool::new(clickhouse_url);
     let executor = DatabaseExecutor::new(pool);
 
+
+    let api=env::var("EXPOSED_URL").unwrap_or("http://localhost:3000/api".to_string());
+
     let api_service =
-        OpenApiService::new(Api, "Hello World", "1.0").server("http://localhost:3000/api");
+        OpenApiService::new(Api, "Hello World", "1.0").server(api);
     let ui = api_service.swagger_ui();
 
     let router = Route::new().nest("/api", api_service).nest("/", ui)
